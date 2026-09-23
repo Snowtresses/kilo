@@ -24,3 +24,13 @@ style CLI.
 
 Kilo was written by Salvatore Sanfilippo aka antirez and is released
 under the BSD 2 clause license.
+
+
+
+
+weimin69:
+
+本fork项目现在由nix管理 
+
+
+我想添加一个括号补全

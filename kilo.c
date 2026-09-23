@@ -32,6 +32,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+//weimin69 作出以下的功能增加
 #define KILO_VERSION "0.0.1"
 
 #ifdef __linux__
