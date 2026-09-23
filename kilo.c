@@ -330,6 +330,7 @@ int getCursorPosition(int ifd, int ofd, int *rows, int *cols) {
  * call fails the function will try to query the terminal itself.
  * Returns 0 on success, -1 on error. */
 int getWindowSize(int ifd, int ofd, int *rows, int *cols) {
+    //what is ifd and ofd ?
     struct winsize ws;
 
     if (ioctl(1, TIOCGWINSZ, &ws) == -1 || ws.ws_col == 0) {
@@ -1183,6 +1184,13 @@ void editorMoveCursor(int key) {
     }
 }
 
+/* Insert a matching pair and leave the cursor between the two characters. */
+void editorInsertPair(int left, int right) {
+    editorInsertChar(left);
+    editorInsertChar(right);
+    editorMoveCursor(ARROW_LEFT);
+}
+
 /* Process events arriving from the standard input, which is, the user
  * is typing stuff on the terminal. */
 #define KILO_QUIT_TIMES 3
@@ -1195,6 +1203,18 @@ void editorProcessKeypress(int fd) {
     switch(c) {
     case ENTER:         /* Enter */
         editorInsertNewline();
+        break;
+    case '(':
+        editorInsertPair('(', ')');
+        break;
+    case '[':
+        editorInsertPair('[', ']');
+        break;
+    case '{':
+        editorInsertPair('{', '}');
+        break;
+    case '"':
+        editorInsertPair('"', '"');
         break;
     case CTRL_C:        /* Ctrl-c */
         /* We ignore ctrl-c, it can't be so simple to lose the changes
