@@ -136,7 +136,8 @@ enum KEY_ACTION{
         HOME_KEY,
         END_KEY,
         PAGE_UP,
-        PAGE_DOWN
+        PAGE_DOWN,
+        SPACE = 32,
 };
 
 void editorSetStatusMessage(const char *fmt, ...);
@@ -1191,6 +1192,13 @@ void editorInsertPair(int left, int right) {
     editorMoveCursor(ARROW_LEFT);
 }
 
+void editorInsertTab(void) {
+    for (int i = 0 ; i < 4; i++) {
+        editorInsertChar(SPACE);//这里的tab的安排是添加四个空格，这样符合现代逻辑
+    }
+
+}
+
 /* Process events arriving from the standard input, which is, the user
  * is typing stuff on the terminal. */
 #define KILO_QUIT_TIMES 3
@@ -1215,6 +1223,9 @@ void editorProcessKeypress(int fd) {
         break;
     case '"':
         editorInsertPair('"', '"');
+        break;
+    case TAB:
+        editorInsertTab();
         break;
     case CTRL_C:        /* Ctrl-c */
         /* We ignore ctrl-c, it can't be so simple to lose the changes
